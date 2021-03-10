@@ -121,17 +121,6 @@ export class GraphTableComponent implements OnInit, AfterViewInit {
     this.dataSource.filterPredicate = this.createFilter();
   }
 
-  generateTableData() {
-    this.DATA.forEach(item => {
-      if(item.type == "user_to_user_link") {
-        let currentName1 = this.DATA.filter(i => i.userId == item.node1);
-        let currentName2 = this.DATA.filter(i => i.userId == item.node2);
-        item.name1 = currentName1[0].name;
-        item.name2 = currentName2[0].name;
-      }
-    })
-  }
-
   ngOnInit(){
     this.positionFilter.valueChanges
       .subscribe(
@@ -160,6 +149,17 @@ export class GraphTableComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  generateTableData() {
+    this.DATA.forEach(item => {
+      if(item.type == "user_to_user_link") {
+        let currentName1 = this.DATA.filter(i => i.userId == item.node1);
+        let currentName2 = this.DATA.filter(i => i.userId == item.node2);
+        item.name1 = currentName1[0].name;
+        item.name2 = currentName2[0].name;
+      }
+    })
   }
 
   createFilter(): (data: any, filter: string) => boolean {
