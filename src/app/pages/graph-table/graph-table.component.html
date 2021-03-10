@@ -1,0 +1,41 @@
+
+<h1 style="text-align: center; margin: 12px auto; text-decoration: underline; font-style: italic;">Graph Table</h1>
+
+<table mat-table [dataSource]="dataSource" matSort>
+
+  <ng-container matColumnDef="position">
+    <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-form-field class="filter" floatLabel="never">
+        <mat-label>Search Position</mat-label>
+        <input matInput [formControl]="positionFilter">
+      </mat-form-field>
+    </th>
+    <td mat-cell *matCellDef="let element">{{element.position}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="node1">
+    <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-form-field class="filter" floatLabel="never">
+        <mat-label>Search Node1</mat-label>
+        <input matInput [formControl]="node1Filter">
+      </mat-form-field>
+    </th>
+    <td mat-cell *matCellDef="let element">{{element.node1}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="node2">
+    <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-form-field class="filter" floatLabel="never">
+        <mat-label>Search Node2</mat-label>
+        <input matInput [formControl]="node2Filter">
+      </mat-form-field>
+    </th>
+    <td mat-cell *matCellDef="let element">{{element.node2}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay"></tr>
+
+</table>
+
+<p style="text-align: center; margin-top: 16px; color: #ff4d4d;"  *ngIf="dataSource.filteredData.length <= 0">No data were found for your request.</p>
