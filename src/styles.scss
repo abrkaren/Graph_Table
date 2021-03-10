@@ -30,9 +30,3 @@ $client-theme: mat-light-theme($client-primary, $client-accent, $client-warn);
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-
-.mat-sort-header-button {
-  flex-direction: column!important;
-  align-items: end!important;
-}

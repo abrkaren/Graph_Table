@@ -85,29 +85,51 @@ export class GraphTableComponent implements OnInit, AfterViewInit {
       type: "user_to_user_link",
       node1: 3,
       node2: 9
+    },
+    {
+      type: "user_to_user_link",
+      node1: 2,
+      node2: 3
+    },
+    {
+      type: "user_to_user_link",
+      node1: 5,
+      node2: 15
     }
   ]
 
   positionFilter = new FormControl('');
-  node1Filter = new FormControl('');
-  node2Filter = new FormControl('');
+  name1Filter = new FormControl('');
+  name2Filter = new FormControl('');
 
   dataSource = new MatTableDataSource();
 
-  columnsToDisplay = ['position', 'node1', 'node2'];
+  columnsToDisplay = ['position', 'name1', 'name2'];
 
   filters = {
     position: '',
-    node1: '',
-    node2: ''
+    name1: '',
+    name2: ''
   };
 
   constructor() {
+    this.generateTableData()
     this.dataSource.data = this.DATA.filter(item => item.type == "user_to_user_link");
     this.dataSource.filteredData.map((item, i) => {
       item['position'] = ++i;
     })
     this.dataSource.filterPredicate = this.createFilter();
+  }
+
+  generateTableData() {
+    this.DATA.forEach(item => {
+      if(item.type == "user_to_user_link") {
+        let currentName1 = this.DATA.filter(i => i.userId == item.node1);
+        let currentName2 = this.DATA.filter(i => i.userId == item.node2);
+        item.name1 = currentName1[0].name;
+        item.name2 = currentName2[0].name;
+      }
+    })
   }
 
   ngOnInit(){
@@ -119,18 +141,18 @@ export class GraphTableComponent implements OnInit, AfterViewInit {
         }
       )
 
-    this.node1Filter.valueChanges
+    this.name1Filter.valueChanges
       .subscribe(
-        node1 => {
-          this.filters.node1 = node1;
+        name1 => {
+          this.filters.name1 = name1;
           this.dataSource.filter = JSON.stringify(this.filters);
         }
       )
 
-    this.node2Filter.valueChanges
+    this.name2Filter.valueChanges
       .subscribe(
-        node2 => {
-          this.filters.node2 = node2;
+        name2 => {
+          this.filters.name2 = name2;
           this.dataSource.filter = JSON.stringify(this.filters);
         }
       )
@@ -144,8 +166,8 @@ export class GraphTableComponent implements OnInit, AfterViewInit {
     let filterFn = function(data, filter): boolean {
       let searchTerms = JSON.parse(filter);
       return (data.position + '').indexOf(searchTerms.position) !== -1
-          && (data.node1 + '').indexOf(searchTerms.node1) !== -1
-          && (data.node2 + '').indexOf(searchTerms.node2) !== -1
+          && (data.name1).indexOf(searchTerms.name1) !== -1
+          && (data.name2).indexOf(searchTerms.name2) !== -1
     }
     return filterFn;
   }

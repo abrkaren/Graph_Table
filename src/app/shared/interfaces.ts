@@ -4,4 +4,6 @@ export interface GraphTable {
   type?: string;
   node1?: number;
   node2?: number;
+  name1?: string;
+  name2?: string;
 }
